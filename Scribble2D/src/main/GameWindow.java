@@ -1,0 +1,23 @@
+package main;
+
+import javax.swing.JFrame;
+
+public class GameWindow {
+	
+	private JFrame jframe;
+	
+	public GameWindow(GamePanel gamePanel) {
+		
+		jframe = new JFrame();	
+		
+		
+		jframe.setSize(500, 500);
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//Añadir panel
+		jframe.add(gamePanel);
+		
+		jframe.setVisible(true);
+	}
+
+}
