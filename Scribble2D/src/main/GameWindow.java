@@ -16,6 +16,8 @@ public class GameWindow {
 		
 		//Añadir panel
 		jframe.add(gamePanel);
+	
+		jframe.setLocationRelativeTo(null);
 		
 		jframe.setVisible(true);
 	}
