@@ -4,7 +4,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import main.GamePanel;
+
 public class MouseInput implements MouseListener, MouseMotionListener{
+	
+	
+	private GamePanel gamePanel;
+	
+	public MouseInput (GamePanel gamePanel) {
+		
+		this.gamePanel = gamePanel;
+	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
@@ -15,8 +25,7 @@ public class MouseInput implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		
-		System.out.println("Raton movido");
-		
+		gamePanel.mouseMove(e.getX(), e.getY());
 	}
 
 	@Override

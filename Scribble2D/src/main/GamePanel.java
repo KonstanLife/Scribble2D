@@ -10,11 +10,14 @@ import inputs.MouseInput;
 public class GamePanel extends JPanel {
 	
 	private int xDelta = 10, yDelta = 10;
+	private MouseInput mauseInput;
 	
 	public GamePanel() {
 		
+		mauseInput = new MouseInput(this);
 		addKeyListener(new KeyboardInput(this));
-		//addMouseListener(new MouseInput());
+		addMouseListener(mauseInput);
+		addMouseMotionListener(mauseInput);
 		
 	}
 	
@@ -25,6 +28,14 @@ public class GamePanel extends JPanel {
 	
 	public void verticalMove(int value) {
 		yDelta += value;
+		repaint();
+	}
+	
+	public void mouseMove(int x, int y) {
+		
+		this.xDelta = x;
+		this.yDelta = y;
+		
 		repaint();
 	}
 	
