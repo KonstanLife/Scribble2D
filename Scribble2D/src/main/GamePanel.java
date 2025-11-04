@@ -1,9 +1,12 @@
 package main;
 
-import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import inputs.KeyboardInput;
@@ -12,20 +15,42 @@ import inputs.MouseInput;
 public class GamePanel extends JPanel {
 	
 	private float xDelta = 10, yDelta = 10;
-	private float xDir = 1, yDir = 1;
+	
 	private MouseInput mauseInput;
 	
-	private Random random;
-	private Color color;
+	private BufferedImage bufferedImage, subImg;
+	
 	
 	public GamePanel() {
 		
 		mauseInput = new MouseInput(this);
+		importImage();
 		addKeyListener(new KeyboardInput(this));
 		addMouseListener(mauseInput);
 		addMouseMotionListener(mauseInput);
+		setPanelSize();
 		
-		random = new Random();
+		
+	}
+	
+	private void importImage() {
+		InputStream is = getClass().getResourceAsStream("/hero.png");
+		
+		try {
+			bufferedImage = ImageIO.read(is);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void setPanelSize() {
+		
+		Dimension size = new Dimension(1280,800);
+		setMinimumSize(size);
+		setMaximumSize(size);
+		setPreferredSize(size);
 		
 	}
 	
@@ -48,31 +73,9 @@ public class GamePanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.setColor(color);
-		g.fillRect((int)xDelta, (int)yDelta, 100, 50);
-		
-		updateRectangle();	
+		subImg = bufferedImage.getSubimage(0, 0, 50, 37);
+		g.drawImage(subImg,(int)xDelta ,(int)yDelta,null);
 	}
 	
-	private void updateRectangle() {
-		
-		xDelta += xDir;
-		if(xDelta > 390 || xDelta < 1) {
-			xDir *= -1;
-			color = updateColor();
-		}
-		
-		yDelta += yDir;
-		if(yDelta > 415 || yDelta < 1) {
-			yDir *= -1;
-			color = updateColor();
-
-		}		
-	}
-	
-	private Color updateColor() {
-		
-		return new Color(random.nextInt(255),random.nextInt(255), random.nextInt(255));
-	}
 
 }

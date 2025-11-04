@@ -11,7 +11,6 @@ public class GameWindow {
 		jframe = new JFrame();	
 		
 		
-		jframe.setSize(500, 500);
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Añadir panel
@@ -19,6 +18,9 @@ public class GameWindow {
 	
 		jframe.setLocationRelativeTo(null);
 		
+		jframe.setResizable(false);
+		jframe.pack();
+				
 		jframe.setVisible(true);
 	}
 
