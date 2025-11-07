@@ -14,6 +14,7 @@ import inputs.KeyboardInput;
 import inputs.MouseInput;
 
 import static utilz.Constants.PlayerConstants.*;
+import static utilz.Constants.Direcions.*;
 
 public class GamePanel extends JPanel {
 	
@@ -27,6 +28,8 @@ public class GamePanel extends JPanel {
 	private int animationTick, animationIndex, animationSpeed = 30;
 	
 	private int playerAcion = IDLE;
+	private int playerDirection = -1;
+	private boolean moving = false;
 	
 	public GamePanel() {
 		
@@ -81,19 +84,14 @@ public class GamePanel extends JPanel {
 		
 	}
 	
-	public void horizontalMove(int value) {
-		xDelta += value;
+	
+	public void setDirection(int direction) {
+		this.playerDirection = direction;
+		this.moving = true;
 	}
 	
-	public void verticalMove(int value) {
-		yDelta += value;	
-	}
-	
-	public void mouseMove(int x, int y) {
-		
-		this.xDelta = x;
-		this.yDelta = y;
-				
+	public void setMoving(boolean moving) {
+		this.moving = moving;
 	}
 	
 	private void updateAnimation() {
@@ -110,12 +108,45 @@ public class GamePanel extends JPanel {
 		
 	}
 	
+	private void setAnimation() {
+		if(moving) {
+			playerAcion = RUNNING;
+		}else {
+			playerAcion = IDLE;
+		}
+		
+	}
+	
+	private void upadtePosition() {
+		
+		if(moving) {
+			
+			switch (playerDirection) {
+			case LEFT:
+				xDelta -=5;
+			case UP: 
+				yDelta -=5;
+			case RIGHT: 
+				xDelta += 5;
+			case DOWN: 
+				yDelta += 5;
+				
+				break;
+			
+		}
+		}
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
 		//subImg = bufferedImage.getSubimage(0, 0, 50, 37);
 		updateAnimation();
+		
+		setAnimation();
+		upadtePosition();
+		
 		g.drawImage(animations[playerAcion][animationIndex],(int)xDelta ,(int)yDelta,50*2,37*2,null);
 	}
 	
